@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}Indices | My Financial API{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Indices</h2>
+<p>
+  Provide an optional <strong>Exchange</strong> to narrow down the list of indices.
+</p>
+
+<form class="row gy-2 gx-3 align-items-center" onsubmit="fetchIndices(event)">
+  <div class="col-auto">
+    <label for="indicesExchange" class="form-label">Exchange:</label>
+    <input type="text" class="form-control" id="indicesExchange" placeholder="Optional">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-info mt-4">Fetch Indices</button>
+  </div>
+</form>
+
+<div class="alert alert-secondary mt-3" id="indicesAlert" style="display:none;">
+  Results will appear here...
+</div>
+
+<table class="table table-responsive table-striped mt-3" id="indicesTable" style="display:none;">
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Exchange</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function fetchIndices(e) {
+  e.preventDefault();
+  const exchange = document.getElementById('indicesExchange').value.trim();
+  let url = '/api/indices';
+  if (exchange) {
+    url += `?exchange=${exchange}`;
+  }
+
+  const alertBox = document.getElementById('indicesAlert');
+  const table = document.getElementById('indicesTable');
+  table.style.display = 'none';
+  alertBox.style.display = 'block';
+  alertBox.textContent = 'Fetching indices...';
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length > 0) {
+      alertBox.textContent = `Fetched ${data.length} indices records.`;
+      const tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.Symbol || ''}</td>
+          <td>${row.Exchange || ''}</td>
+          <td>${row.Name || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      table.style.display = 'table';
+    } else {
+      alertBox.textContent = 'No index records found.';
+    }
+  } catch (error) {
+    alertBox.textContent = 'Error fetching data.';
+    console.error(error);
+  }
+}
+</script>
+
+{% endblock %}

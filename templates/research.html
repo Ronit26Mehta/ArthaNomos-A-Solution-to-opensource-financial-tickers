@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Research | My Financial API{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Research & Methodology</h2>
+<p>
+  Discover how we collect, clean, and standardize our financial data. 
+  Click below to download our research paper.
+</p>
+
+<button class="btn btn-primary" onclick="downloadPaper()">
+  Download Paper
+</button>
+
+<div class="alert alert-success mt-3" id="downloadAlert" style="display:none;">
+  Preparing your download...
+</div>
+
+<script>
+function downloadPaper() {
+  const alertBox = document.getElementById('downloadAlert');
+  alertBox.style.display = 'block';
+  alertBox.textContent = 'Downloading...';
+  window.location.href = '/api/download-paper';
+}
+</script>
+
+{% endblock %}

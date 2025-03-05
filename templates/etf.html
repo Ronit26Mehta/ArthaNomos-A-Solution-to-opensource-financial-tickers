@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}ETFs | My Financial API{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Exchange-Traded Funds (ETFs)</h2>
+<p>
+  Specify an <strong>Exchange</strong> if needed to filter ETFs, otherwise all ETFs are returned.
+</p>
+
+<form class="row gy-2 gx-3 align-items-center" onsubmit="fetchETFs(event)">
+  <div class="col-auto">
+    <label for="etfExchange" class="form-label">Exchange:</label>
+    <input type="text" class="form-control" id="etfExchange" placeholder="e.g. NYSE">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-secondary mt-4">Fetch ETFs</button>
+  </div>
+</form>
+
+<div class="alert alert-info mt-3" id="etfAlert" style="display:none;">
+  Results will appear here...
+</div>
+
+<table class="table table-striped table-sm mt-3" id="etfTable" style="display:none;">
+  <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Exchange</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function fetchETFs(e) {
+  e.preventDefault();
+  const exchange = document.getElementById('etfExchange').value.trim();
+  let url = '/api/etf';
+  if (exchange) {
+    url += `?exchange=${exchange}`;
+  }
+
+  const alertBox = document.getElementById('etfAlert');
+  const table = document.getElementById('etfTable');
+  table.style.display = 'none';
+  alertBox.style.display = 'block';
+  alertBox.textContent = 'Fetching ETFs...';
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length > 0) {
+      alertBox.textContent = `Fetched ${data.length} ETF records.`;
+      const tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.Symbol || ''}</td>
+          <td>${row.Exchange || ''}</td>
+          <td>${row.Name || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      table.style.display = 'table';
+    } else {
+      alertBox.textContent = 'No ETF records found.';
+    }
+  } catch (error) {
+    alertBox.textContent = 'Error fetching data.';
+    console.error(error);
+  }
+}
+</script>
+
+{% endblock %}

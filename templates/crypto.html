@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block title %}Cryptocurrencies | My Financial API{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Cryptocurrencies</h2>
+<p>
+  Cryptocurrencies do <strong>not</strong> require an exchange parameter. 
+  Just click "Fetch Crypto" to see all available symbols.
+</p>
+
+<button class="btn btn-dark" onclick="fetchCrypto()">Fetch Crypto</button>
+
+<div class="alert alert-warning mt-3" id="cryptoAlert" style="display:none;">
+  Results will appear here...
+</div>
+
+<table class="table table-bordered table-sm mt-3" id="cryptoTable" style="display:none;">
+  <thead class="table-dark">
+    <tr>
+      <th>Symbol</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function fetchCrypto() {
+  const alertBox = document.getElementById('cryptoAlert');
+  const table = document.getElementById('cryptoTable');
+  table.style.display = 'none';
+  alertBox.style.display = 'block';
+  alertBox.textContent = 'Fetching crypto data...';
+
+  try {
+    const response = await fetch('/api/crypto');
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length > 0) {
+      alertBox.textContent = `Fetched ${data.length} crypto records.`;
+      const tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.Symbol || ''}</td>
+          <td>${row.Name || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      table.style.display = 'table';
+    } else {
+      alertBox.textContent = 'No crypto records found.';
+    }
+  } catch (error) {
+    alertBox.textContent = 'Error fetching data.';
+    console.error(error);
+  }
+}
+</script>
+
+{% endblock %}

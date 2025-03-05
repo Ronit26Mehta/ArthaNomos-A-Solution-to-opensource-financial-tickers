@@ -1,0 +1,61 @@
+# ------------------------
+# Python Compiled Files
+# ------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ------------------------
+# Virtual Environments
+# ------------------------
+venv/
+.venv/
+env/
+ENV/
+
+# ------------------------
+# Environment / Config
+# ------------------------
+.env
+*.env
+
+# ------------------------
+# Logs and Databases
+# ------------------------
+*.log
+*.sqlite3
+*.db
+
+# ------------------------
+# OS Generated Files
+# ------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------
+# Editor Directories and Files
+# ------------------------
+.vscode/
+.idea/
+*.swp
+
+# ------------------------
+# Coverage
+# ------------------------
+.coverage
+.coverage.*
+htmlcov/
+.cache
+
+# ------------------------
+# Optional Data Ignore
+# Uncomment this if you do NOT want CSVs in Git
+# ------------------------
+# data/*.csv
+
+# ------------------------
+# Optional: Python egg & distribution
+# ------------------------
+*.egg-info/
+dist/
+build/

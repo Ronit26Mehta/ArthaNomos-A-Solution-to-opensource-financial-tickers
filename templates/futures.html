@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}Futures | My Financial API{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Futures</h2>
+<p>
+  Optionally specify an <strong>Exchange</strong> to filter futures.
+</p>
+
+<form class="row gy-2 gx-3 align-items-center" onsubmit="fetchFutures(event)">
+  <div class="col-auto">
+    <label for="futuresExchange" class="form-label">Exchange:</label>
+    <input type="text" class="form-control" id="futuresExchange" placeholder="e.g. CME">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-warning mt-4">Fetch Futures</button>
+  </div>
+</form>
+
+<div class="alert alert-info mt-3" id="futuresAlert" style="display:none;">
+  Results will appear here...
+</div>
+
+<table class="table table-bordered mt-3" id="futuresTable" style="display:none;">
+  <thead class="table-dark">
+    <tr>
+      <th>Symbol</th>
+      <th>Exchange</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function fetchFutures(e) {
+  e.preventDefault();
+  const exchange = document.getElementById('futuresExchange').value.trim();
+  let url = '/api/futures';
+  if (exchange) {
+    url += `?exchange=${exchange}`;
+  }
+
+  const alertBox = document.getElementById('futuresAlert');
+  const table = document.getElementById('futuresTable');
+  table.style.display = 'none';
+  alertBox.style.display = 'block';
+  alertBox.textContent = 'Fetching futures...';
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (Array.isArray(data) && data.length > 0) {
+      alertBox.textContent = `Fetched ${data.length} futures records.`;
+      const tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.Symbol || ''}</td>
+          <td>${row.Exchange || ''}</td>
+          <td>${row.Name || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      table.style.display = 'table';
+    } else {
+      alertBox.textContent = 'No futures records found.';
+    }
+  } catch (error) {
+    alertBox.textContent = 'Error fetching data.';
+    console.error(error);
+  }
+}
+</script>
+
+{% endblock %}
