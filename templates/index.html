@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Home | My Financial API{% endblock %}
+{% block title %}Home | Arthanomos Financial API{% endblock %}
 {% block content %}
 
 <!-- Hero/Jumbotron Section -->
@@ -7,9 +7,8 @@
   <div class="container py-5">
     <h1 class="display-5 fw-bold">Welcome to Arthanomos Financial API Portal</h1>
     <p class="col-md-8 fs-4">
-      Access real-time market tickers from Equities, Mutual Funds, Currencies, Cryptos, Indices, Futures, and ETFs.
+      Access real-time market data for Equities, Mutual Funds, Currencies, Cryptocurrencies, Indices, Futures, and ETFs.
     </p>
-    <!-- Example call to action -->
     <button class="btn btn-primary btn-lg" type="button" onclick="location.href='{{ url_for('equity_page') }}'">
       Get Started
     </button>
@@ -18,15 +17,13 @@
 
 <!-- Card Rows for All Assets -->
 
-<!-- First Row (3 Cards): Equities, Mutual Funds, Crypto -->
+<!-- First Row: Equities, Mutual Funds, Crypto -->
 <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
   <div class="col">
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">Equities</h5>
-        <p class="card-text">
-          Filter by exchange and get global equity symbols instantly.
-        </p>
+        <p class="card-text">Filter by exchange and get global equity symbols instantly.</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
@@ -40,9 +37,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">Mutual Funds</h5>
-        <p class="card-text">
-          Retrieve mutual fund data from top markets worldwide.
-        </p>
+        <p class="card-text">Retrieve mutual fund data from top markets worldwide.</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
@@ -56,9 +51,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">Cryptocurrencies</h5>
-        <p class="card-text">
-          Fetch popular crypto symbols quickly—no exchange needed.
-        </p>
+        <p class="card-text">Fetch popular crypto symbols quickly—no exchange needed.</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
@@ -69,15 +62,13 @@
   </div>
 </div>
 
-<!-- Second Row (4 Cards): Currency, Indices, Futures, ETFs -->
+<!-- Second Row: Currency, Indices, Futures, ETF -->
 <div class="row row-cols-1 row-cols-md-4 g-4">
   <div class="col">
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">Currencies</h5>
-        <p class="card-text">
-          No exchange parameter required—just fetch currency data directly.
-        </p>
+        <p class="card-text">No exchange parameter required—just fetch currency data directly.</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
@@ -91,9 +82,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">Indices</h5>
-        <p class="card-text">
-          Discover global indices. Filter by exchange or see them all.
-        </p>
+        <p class="card-text">Discover global indices. Filter by exchange or see them all.</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
@@ -107,9 +96,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">Futures</h5>
-        <p class="card-text">
-          Filter by exchange (e.g., CME) or get a complete list of futures.
-        </p>
+        <p class="card-text">Filter by exchange (e.g., CME) or get a complete list of futures.</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
@@ -123,9 +110,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">ETFs</h5>
-        <p class="card-text">
-          Access a wide range of Exchange-Traded Funds. Filter by exchange if needed.
-        </p>
+        <p class="card-text">Access a wide range of Exchange-Traded Funds. Filter by exchange if needed.</p>
       </div>
       <div class="card-footer">
         <small class="text-muted">
