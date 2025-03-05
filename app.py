@@ -71,12 +71,12 @@ def get_mutualfund():
 
 @app.route('/api/crypto', methods=['GET'])
 def get_crypto():
-    # No exchange needed
+    
     return jsonify(df_crypto.to_dict(orient='records'))
 
 @app.route('/api/currency', methods=['GET'])
 def get_currency():
-    # No exchange needed
+    
     return jsonify(df_currency.to_dict(orient='records'))
 
 @app.route('/api/indices', methods=['GET'])
